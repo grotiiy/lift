@@ -20,14 +20,13 @@ def turn(elevator, queue):
         if not queue.is_empty:
             elevator.go_to(randrange(LEVELS))
 
-
 def clear():
     sys.stdout.write('\033[2J')
     sys.stdout.write('\033[H')
     sys.stdout.flush()
 
 def floor_display(level, level_queue, elevator):
-    display = "------------------------------\n"
+    display = "--------------%s---------------\n" % level
     display += "{:<30}\n".format(level_queue)
     if elevator.current_floor == level:
         display += "{:<30}\n".format(elevator)
@@ -42,10 +41,9 @@ while True:
     if not randrange(0, 5):
         queue.append(person)
     
-    for level, level_queue in queue.levels.iteritems():        
-        print floor_display(level, level_queue, elevator)
-
-
+    for level in range(0,5)[::-1]:
+        print floor_display(level, queue.levels[level], elevator)
+    
     while elevator.can_enter and queue.levels[elevator.current_floor]:
         elevator.add_to_payload(queue.levels[elevator.current_floor].pop(0))
 

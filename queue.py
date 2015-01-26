@@ -16,4 +16,3 @@ class Queue:
             waiting += len(self.levels[level])
         
         return not waiting
-
