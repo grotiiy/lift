@@ -12,6 +12,15 @@ elevator = Elevator()
 queue = Queue()
 floors = [Floor(f) for f in range(LEVELS) ]
 
+def turn(elevator, queue):
+    sleep(0.1)
+    if elevator.queue:
+        elevator.go_to(elevator.queue.pop(0))
+    if elevator.is_empty:
+        if not queue.is_empty:
+            elevator.go_to(randrange(LEVELS))
+
+
 def clear():
     sys.stdout.write('\033[2J')
     sys.stdout.write('\033[H')
@@ -40,8 +49,4 @@ while True:
     while elevator.can_enter and queue.levels[elevator.current_floor]:
         elevator.add_to_payload(queue.levels[elevator.current_floor].pop(0))
 
-    elevator.turn(queue)
-
-    print elevator.payload
-    print "total:", elevator.transported
-#    sleep(0.1)
+    turn(elevator, queue)

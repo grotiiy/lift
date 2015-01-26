@@ -60,18 +60,25 @@ class Elevator:
                 self.payload.remove(person)
                 self.transported +=1
 
-    def go_to(self, floor_number):
+    def go_up(self):
         sleep(0.1)
-        self.current_floor = floor_number
+        self.current_floor += 1
+
+    def go_down(self):
+        sleep(0.1)
+        self.current_floor -= 1 
+        
+    def go_to(self, floor_number):
+        if floor_number > self.current_floor:
+            f = self.go_up
+        else:
+            f = self.go_down
+
+        while self.current_floor !=  floor_number:
+            f()
+            
         self.floor_reached()
 
-    def turn(self, queue):
-        sleep(0.1)
-        if self.queue:
-            self.go_to(self.queue.pop(0))
-        if self.is_empty:
-            if not queue.is_empty:
-                self.go_to(randrange(LEVELS))
 
 
 
