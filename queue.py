@@ -7,5 +7,13 @@ class Queue:
             self.levels[level] = []
     
     def append(self, person):
-        self.levels[person.desired_floor].append(person)
+        self.levels[person.current_floor].append(person)
+
+    @property
+    def is_empty(self):
+        waiting = 0
+        for level in range(LEVELS):
+            waiting += len(self.levels[level])
+        
+        return not waiting
 
